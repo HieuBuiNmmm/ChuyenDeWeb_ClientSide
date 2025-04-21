@@ -41,17 +41,44 @@ export function FormUpdate() {
         setFormData({ ...formData, [name]: value });
     };
 
+    // const handleUpdate = async (e) => {
+    //     e.preventDefault();
+
+    //     if (!formData) {
+    //         setNotification("Không có dữ liệu để cập nhật!");
+    //         setTimeout(() => setNotification(""), 5000); // Tự động ẩn thông báo sau 5 giây
+    //         return;
+    //     }
+
+    //     console.log("Dữ liệu gửi lên API:", formData); // Log dữ liệu để kiểm tra
+
+    //     try {
+    //         // Gửi yêu cầu PUT để cập nhật sản phẩm
+    //         const response = await axios.put(`${API_URL}/api/products/${productId}`, {
+    //             ...formData,
+    //             Giá: parseInt(formData.Giá, 10), // Chuyển giá thành số nguyên
+    //         });
+    //         console.log("Phản hồi từ API:", response.data); // Log phản hồi từ API
+    //         setNotification("Sản phẩm đã được cập nhật thành công!");
+    //     } catch (error) {
+    //         console.error("Lỗi khi cập nhật sản phẩm:", error);
+    //         setNotification("Đã xảy ra lỗi khi cập nhật sản phẩm. Vui lòng thử lại!");
+    //     } finally {
+    //         setTimeout(() => setNotification(""), 5000); // Tự động ẩn thông báo sau 5 giây
+    //     }
+    // };
+
     const handleUpdate = async (e) => {
         e.preventDefault();
-
+    
         if (!formData) {
             setNotification("Không có dữ liệu để cập nhật!");
             setTimeout(() => setNotification(""), 5000); // Tự động ẩn thông báo sau 5 giây
             return;
         }
-
+    
         console.log("Dữ liệu gửi lên API:", formData); // Log dữ liệu để kiểm tra
-
+    
         try {
             // Gửi yêu cầu PUT để cập nhật sản phẩm
             const response = await axios.put(`${API_URL}/api/products/${productId}`, {
@@ -180,7 +207,7 @@ export function FormUpdate() {
                             <option value="Không khả dụng">Không khả dụng</option>
                         </select>
                     </div>
-                    <div>
+                    {/* <div>
                         <label className="block text-sm font-medium text-gray-700">Ảnh (URL)</label>
                         <input
                             type="text"
@@ -189,6 +216,49 @@ export function FormUpdate() {
                             onChange={handleInputChange}
                             className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
                             required
+                        />
+                    </div> */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Ảnh (Chọn file)</label>
+                        <input
+                            type="file"
+                            name="Ảnh"
+                            accept="image/*"
+                            onChange={async (e) => {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+                                    if (!validTypes.includes(file.type)) {
+                                        setNotification("Chỉ chấp nhận file ảnh định dạng JPG, JPEG, PNG!");
+                                        setTimeout(() => setNotification(""), 5000);
+                                        return;
+                                    }
+                                    if (file.size > 5 * 1024 * 1024) { // 5MB
+                                        setNotification("Kích thước file ảnh không được vượt quá 5MB!");
+                                        setTimeout(() => setNotification(""), 5000);
+                                        return;
+                                    }
+
+                                    const imageFormData = new FormData();
+                                    imageFormData.append("image", file);
+
+                                    try {
+                                        const uploadResponse = await axios.post(`${API_URL}/api/upload-image`, imageFormData, {
+                                            headers: {
+                                                "Content-Type": "multipart/form-data",
+                                            },
+                                        });
+                                        setFormData({ ...formData, Ảnh: uploadResponse.data.filename });
+                                        setNotification("Ảnh đã được tải lên thành công!");
+                                        setTimeout(() => setNotification(""), 5000);
+                                    } catch (error) {
+                                        console.error("Lỗi khi tải ảnh lên:", error);
+                                        setNotification("Đã xảy ra lỗi khi tải ảnh lên!");
+                                        setTimeout(() => setNotification(""), 5000);
+                                    }
+                                }
+                            }}
+                            className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
                         />
                     </div>
                     <button

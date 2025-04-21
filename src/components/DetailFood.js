@@ -103,7 +103,7 @@ export function DetailFood() {
                     </p>
 
                     {/* Chọn số lượng và Thêm vào giỏ hàng */}
-                    {food.Trạng_Thái !== "Không khả dụng" ? (
+                    {food.Trạng_Thái !== "Không khả dụng" && food.Trạng_Thái !== "Hết hàng" ? (
                         <>
                             <div className="mt-6 flex items-center gap-4">
                                 <label htmlFor="quantity" className="text-gray-700 font-medium">
@@ -127,7 +127,7 @@ export function DetailFood() {
                             </button>
                         </>
                     ) : (
-                        <p className="mt-6 text-red-500 font-medium">Sản phẩm hiện không khả dụng.</p>
+                        <p className="mt-6 text-red-500 font-medium">Sản phẩm hiện không khả dụng hoặc đã hết hàng.</p>
                     )}
                 </div>
             </div>
