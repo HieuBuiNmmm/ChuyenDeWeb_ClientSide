@@ -8,13 +8,13 @@ export function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const { login } = useAuth();
-
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(""); // Reset lỗi trước khi gửi yêu cầu
     
         try {
-            const response = await fetch("http://localhost:5000/api/login", {
+            const response = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

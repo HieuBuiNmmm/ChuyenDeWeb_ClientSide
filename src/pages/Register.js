@@ -8,7 +8,7 @@ export function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
     const handleRegister = async (e) => {
         e.preventDefault();
         setError(""); // Reset lỗi trước khi gửi yêu cầu
@@ -19,7 +19,7 @@ export function Register() {
         }
 
         try {
-            const response = await axios.post("http://localhost:5000/api/register", {
+            const response = await axios.post(`${API_URL}/api/register  `, {
                 email,
                 password,
                 role: "admin", // Thêm thuộc tính role

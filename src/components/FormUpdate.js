@@ -7,7 +7,7 @@ export function FormUpdate() {
     const [productId, setProductId] = useState(id || ""); // ID sản phẩm cần cập nhật
     const [formData, setFormData] = useState(null); // Dữ liệu form để chỉnh sửa
     const [notification, setNotification] = useState(""); // Thông báo trạng thái
-
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
     useEffect(() => {
         if (id) {
             // Nếu có ID từ URL, tự động tìm kiếm sản phẩm
@@ -17,7 +17,7 @@ export function FormUpdate() {
 
     const fetchProductById = async (productId) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+            const response = await axios.get(`${API_URL}/api/products/${productId}`);
             setFormData(response.data);
         } catch (error) {
             console.error("Lỗi khi tải thông tin sản phẩm:", error);
@@ -53,7 +53,7 @@ export function FormUpdate() {
 
         try {
             // Gửi yêu cầu PUT để cập nhật sản phẩm
-            const response = await axios.put(`http://localhost:5000/api/products/${productId}`, {
+            const response = await axios.put(`${API_URL}/api/products/${productId}`, {
                 ...formData,
                 Giá: parseInt(formData.Giá, 10), // Chuyển giá thành số nguyên
             });

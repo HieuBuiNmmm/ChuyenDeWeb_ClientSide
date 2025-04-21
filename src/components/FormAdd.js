@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export function FormAdd() {
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
     const [formData, setFormData] = useState({
         ID: "",
         Ảnh: "",
@@ -23,7 +24,7 @@ export function FormAdd() {
         if (name === "Danh_Mục" && value) {
             try {
                 // Gọi API để lấy ID mới từ backend
-                const response = await axios.get(`http://localhost:5000/api/products/new-id?category=${value}`);
+                const response = await axios.get(`${API_URL}/api/products/new-id?category=${value}`);
                 setFormData((prev) => ({ ...prev, ID: response.data.newId }));
             } catch (error) {
                 console.error("Lỗi khi tạo ID sản phẩm:", error);
@@ -78,7 +79,7 @@ export function FormAdd() {
                 const imageFormData = new FormData();
                 imageFormData.append("image", imageFile);
 
-                const uploadResponse = await axios.post("http://localhost:5000/api/upload-image", imageFormData, {
+                const uploadResponse = await axios.post(`${API_URL}/api/upload-image`, imageFormData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -88,7 +89,7 @@ export function FormAdd() {
             }
 
             // 2. Gửi dữ liệu sản phẩm sau khi upload ảnh xong
-            const response = await axios.post("http://localhost:5000/api/products", {
+            const response = await axios.post(`${API_URL}/api/products`, {
                 ...formData,
                 Ảnh: uploadedFileName, // Gửi tên file thay vì đường dẫn
                 Giá: parseInt(formData.Giá, 10),

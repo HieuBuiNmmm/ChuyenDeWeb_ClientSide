@@ -19,10 +19,12 @@ export function FoodList() {
     const [notification, setNotification] = useState("");
     const navigate = useNavigate();
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
+
     useEffect(() => {
         const fetchFoods = async () => {
             try {
-                const response = await axios.get("https://chuyendeweb-serverside.onrender.com/api/products");
+                const response = await axios.get(`${API_URL}/api/products`);
                 setAllFoods(response.data);
                 setFilteredFoods(response.data);
                 setVisibleFoods(response.data.slice(0, ITEMS_PER_PAGE));
@@ -36,7 +38,7 @@ export function FoodList() {
         };
 
         fetchFoods();
-    }, []);
+    }, [API_URL]);
 
     useEffect(() => {
         // Lọc và sắp xếp danh sách món ăn
@@ -96,7 +98,7 @@ export function FoodList() {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://chuyendeweb-serverside.onrender.com/api/products/${selectedFoodId}`);
+            await axios.delete(`${API_URL}/api/products/${selectedFoodId}`);
             setNotification(`Sản phẩm với ID "${selectedFoodId}" đã được xóa thành công!`);
             const updatedFoods = allFoods.filter((food) => food.ID !== selectedFoodId);
             setAllFoods(updatedFoods);

@@ -5,11 +5,11 @@ export function FormDelete() {
     const [productId, setProductId] = useState(""); // ID sản phẩm cần xóa
     const [notification, setNotification] = useState(""); // Thông báo trạng thái
     const [showConfirm, setShowConfirm] = useState(false); // Hiển thị bảng xác nhận
-
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
     const handleDelete = async () => {
         try {
             // Gọi API để xóa sản phẩm
-            await axios.delete(`http://localhost:5000/api/products/${productId}`);
+            await axios.delete(`${API_URL}/api/products/${productId}`);
             setNotification(`Sản phẩm với ID "${productId}" đã được xóa thành công!`);
             setProductId(""); // Reset ID sau khi xóa
         } catch (error) {

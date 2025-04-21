@@ -11,16 +11,17 @@ export function DetailFood() {
     const [food, setFood] = useState(null); // State để lưu thông tin món ăn
     const [similarFoods, setSimilarFoods] = useState([]); // State để lưu sản phẩm tương tự
     const [loading, setLoading] = useState(true); // State để hiển thị trạng thái tải dữ liệu
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
 
     useEffect(() => {
         const fetchFoodDetails = async () => {
             try {
                 // Gọi API để lấy thông tin món ăn
-                const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+                const response = await axios.get(`${API_URL}/api/products/${id}`);
                 setFood(response.data);
 
                 // Gọi API để lấy danh sách sản phẩm tương tự
-                const similarResponse = await axios.get(`http://localhost:5000/api/products`);
+                const similarResponse = await axios.get(`${API_URL}/api/products`);
                 const filteredFoods = similarResponse.data.filter(
                     (item) => item.Danh_Mục === response.data.Danh_Mục && item.ID !== response.data.ID
                 );
@@ -33,7 +34,7 @@ export function DetailFood() {
         };
 
         fetchFoodDetails();
-    }, [id]);
+    }, [API_URL, id]);
 
     if (loading) {
         return (
