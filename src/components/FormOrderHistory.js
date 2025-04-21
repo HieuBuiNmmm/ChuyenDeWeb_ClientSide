@@ -7,8 +7,8 @@ export function FormOrderHistory() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const { user } = useAuth(); // Lấy thông tin user từ AuthContext
-    // const API_URL = "https://chuyendeweb-serverside.onrender.com";
-    const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
+    const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    // const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
 
     useEffect(() => {
         const fetchOrders = async () => {

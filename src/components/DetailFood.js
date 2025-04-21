@@ -14,8 +14,8 @@ export function DetailFood() {
     const [quantity, setQuantity] = useState(1);
     const [similarFoods, setSimilarFoods] = useState([]); // State để lưu sản phẩm tương tự
     const [loading, setLoading] = useState(true); // State để hiển thị trạng thái tải dữ liệu
-    // const API_URL = "https://chuyendeweb-serverside.onrender.com";
-    const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
+    const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    // const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
 
     useEffect(() => {
         const fetchFoodDetails = async () => {
