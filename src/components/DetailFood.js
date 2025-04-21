@@ -9,6 +9,7 @@ import { Navigation } from "swiper/modules";
 export function DetailFood() {
     const { id } = useParams(); // Lấy ID từ URL
     const [food, setFood] = useState(null); // State để lưu thông tin món ăn
+    const [quantity, setQuantity] = useState(1);
     const [similarFoods, setSimilarFoods] = useState([]); // State để lưu sản phẩm tương tự
     const [loading, setLoading] = useState(true); // State để hiển thị trạng thái tải dữ liệu
     const API_URL ="https://chuyendeweb-serverside.onrender.com";
@@ -69,12 +70,31 @@ export function DetailFood() {
                     <p className="text-orange-500 font-bold text-2xl mt-4">
                         {food.Giá.toLocaleString("vi-VN")}₫
                     </p>
-                    <button className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition">
+    
+                    {/* Chọn số lượng */}
+                    <div className="mt-6 flex items-center gap-4">
+                        <label htmlFor="quantity" className="text-gray-700 font-medium">
+                            Số lượng:
+                        </label>
+                        <input
+                            id="quantity"
+                            type="number"
+                            min="1"
+                            value={quantity}
+                            onChange={(e) => setQuantity(Number(e.target.value))}
+                            className="w-16 px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        />
+                    </div>
+    
+                    <button
+                        className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"
+                        onClick={() => console.log(`Thêm ${quantity} sản phẩm vào giỏ hàng`)}
+                    >
                         Thêm vào giỏ hàng
                     </button>
                 </div>
             </div>
-
+    
             {/* Sản phẩm tương tự */}
             {similarFoods.length > 0 && (
                 <div className="mt-12">
