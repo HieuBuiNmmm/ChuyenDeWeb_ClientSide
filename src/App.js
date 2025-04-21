@@ -11,6 +11,7 @@ import { ProfileUser } from "./pages/ProfileUser";
 import { FormAdd } from "./components/FormAdd";
 import { FormUpdate } from "./components/FormUpdate";
 import { FormDelete } from "./components/FormDelete";
+import { FormOrderHistory } from "./components/FormOrderHistory";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/update-food" element={<FormUpdate />} />
         <Route path="/update-food/:id" element={<FormUpdate />} /> {/* Route với ID */}
         <Route path="/delete-food" element={<FormDelete />} />
+        <Route path="/order-history" element={<FormOrderHistory />} />
       </Routes>
       <Footer />
     </Router>
