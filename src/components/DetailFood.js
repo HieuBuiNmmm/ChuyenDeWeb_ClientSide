@@ -101,28 +101,34 @@ export function DetailFood() {
                     <p className="text-orange-500 font-bold text-2xl mt-4">
                         {food.Giá.toLocaleString("vi-VN")}₫
                     </p>
-    
-                    {/* Chọn số lượng */}
-                    <div className="mt-6 flex items-center gap-4">
-                        <label htmlFor="quantity" className="text-gray-700 font-medium">
-                            Số lượng:
-                        </label>
-                        <input
-                            id="quantity"
-                            type="number"
-                            min="1"
-                            value={quantity}
-                            onChange={(e) => setQuantity(Number(e.target.value))}
-                            className="w-16 px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        />
-                    </div>
-    
-                    <button
-                        className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"
-                        onClick={handleAddToCart}
-                    >
-                        Thêm vào giỏ hàng
-                    </button>
+
+                    {/* Chọn số lượng và Thêm vào giỏ hàng */}
+                    {food.Trạng_Thái !== "Không khả dụng" ? (
+                        <>
+                            <div className="mt-6 flex items-center gap-4">
+                                <label htmlFor="quantity" className="text-gray-700 font-medium">
+                                    Số lượng:
+                                </label>
+                                <input
+                                    id="quantity"
+                                    type="number"
+                                    min="1"
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(Number(e.target.value))}
+                                    className="w-16 px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                                />
+                            </div>
+
+                            <button
+                                className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"
+                                onClick={handleAddToCart}
+                            >
+                                Thêm vào giỏ hàng
+                            </button>
+                        </>
+                    ) : (
+                        <p className="mt-6 text-red-500 font-medium">Sản phẩm hiện không khả dụng.</p>
+                    )}
                 </div>
             </div>
 

@@ -167,6 +167,20 @@ export function FormUpdate() {
                         />
                     </div>
                     <div>
+                        <label className="block text-sm font-medium text-gray-700">Trạng Thái</label>
+                        <select
+                            name="Trạng_Thái"
+                            value={formData.Trạng_Thái}
+                            onChange={handleInputChange}
+                            className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                            required
+                        >
+                            <option value="Còn hàng">Còn hàng</option>
+                            <option value="Hết hàng">Hết hàng</option>
+                            <option value="Không khả dụng">Không khả dụng</option>
+                        </select>
+                    </div>
+                    <div>
                         <label className="block text-sm font-medium text-gray-700">Ảnh (URL)</label>
                         <input
                             type="text"
