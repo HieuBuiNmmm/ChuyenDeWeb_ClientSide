@@ -8,7 +8,7 @@ export function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const { login } = useAuth();
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "https://chuyendeweb-serverside.onrender.com";
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(""); // Reset lỗi trước khi gửi yêu cầu

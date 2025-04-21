@@ -11,7 +11,7 @@ export function DetailFood() {
     const [food, setFood] = useState(null); // State để lưu thông tin món ăn
     const [similarFoods, setSimilarFoods] = useState([]); // State để lưu sản phẩm tương tự
     const [loading, setLoading] = useState(true); // State để hiển thị trạng thái tải dữ liệu
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
+    const API_URL ="https://chuyendeweb-serverside.onrender.com";
 
     useEffect(() => {
         const fetchFoodDetails = async () => {

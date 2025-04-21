@@ -19,7 +19,7 @@ export function FoodList() {
     const [notification, setNotification] = useState("");
     const navigate = useNavigate();
 
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "https://chuyendeweb-serverside.onrender.com";
 
     useEffect(() => {
         const fetchFoods = async () => {

@@ -7,7 +7,7 @@ export function FormUpdate() {
     const [productId, setProductId] = useState(id || ""); // ID sản phẩm cần cập nhật
     const [formData, setFormData] = useState(null); // Dữ liệu form để chỉnh sửa
     const [notification, setNotification] = useState(""); // Thông báo trạng thái
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000" || "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "https://chuyendeweb-serverside.onrender.com";
     useEffect(() => {
         if (id) {
             // Nếu có ID từ URL, tự động tìm kiếm sản phẩm
