@@ -60,30 +60,8 @@ export function Navbar() {
             <div className="flex items-center gap-8">
                 {/* Logo */}
                 <Link to="/">
-                    <img src="/logo.png" alt="FoodEaz" className="h-10" />
+                    <img src="../../public/LogoFood.png" alt="FoodEaz" className="h-10" />
                 </Link>
-
-                {/* Location dropdown */}
-                {/* <div
-                    ref={locationRef}
-                    className="relative flex items-center gap-2 text-sm font-medium text-gray-700 border px-4 py-2 rounded-lg bg-gray-100 cursor-pointer hover:bg-gray-200 transition-all"
-                    onClick={() => setLocationDropdown(!locationDropdown)}
-                >
-                    TP. HCM
-                    <ChevronDown size={16} />
-                    {locationDropdown && (
-                        <div className="absolute z-20 top-full left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
-                            {["Hà Nội", "Đà Nẵng", "TP. HCM"].map((loc) => (
-                                <div
-                                    key={loc}
-                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700"
-                                >
-                                    {loc}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div> */}
 
                 {/* Categories */}
                 <div className="flex items-center gap-6 ml-[65px]">
@@ -106,15 +84,6 @@ export function Navbar() {
 
             {/* Search + Auth + Language */}
             <div className="flex items-center gap-6 mr-[175px]">
-                {/* Search icon */}
-                <button
-                    className="text-xl text-gray-600 hover:text-orange-500 transition-all"
-                    title="Tìm kiếm"
-                >
-                    <Search size={16} />
-                </button>
-
-                {/* Auth: User or Login */}
                 {user ? (
                     <div ref={userRef} className="relative">
                         <button
@@ -163,26 +132,6 @@ export function Navbar() {
                         Đăng nhập
                     </button>
                 )}
-
-                {/* Language dropdown */}
-                {/* <div
-                    ref={languageRef}
-                    className="relative flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer hover:text-orange-500 transition-all"
-                    onClick={() => setLanguageDropdown(!languageDropdown)}
-                >
-                    VN
-                    <ChevronDown size={16} />
-                    {languageDropdown && (
-                        <div className="absolute z-20 top-full right-0 mt-4 w-48 bg-white border rounded-lg shadow-lg">
-                            <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-700">
-                                Tiếng Việt
-                            </div>
-                            <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-700">
-                                English
-                            </div>
-                        </div>
-                    )}
-                </div> */}
             </div>
         </nav>
     );
