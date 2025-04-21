@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export function FormAdd() {
-    const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    // const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
     const [formData, setFormData] = useState({
         ID: "",
         Ảnh: "",

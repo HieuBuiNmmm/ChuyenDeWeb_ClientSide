@@ -6,7 +6,8 @@ export function ProfileUser() {
     const [user, setUser] = useState(null); // Dữ liệu user
     const [isEditing, setIsEditing] = useState(false); // Trạng thái chỉnh sửa
     const [formData, setFormData] = useState({}); // Dữ liệu form
-    const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    // const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
 
     // Lấy token từ localStorage
     const token = localStorage.getItem("authToken");

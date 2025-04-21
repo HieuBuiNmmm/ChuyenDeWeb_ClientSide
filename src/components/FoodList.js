@@ -19,7 +19,8 @@ export function FoodList() {
     const [notification, setNotification] = useState("");
     const navigate = useNavigate();
 
-    const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    // const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
 
     useEffect(() => {
         const fetchFoods = async () => {

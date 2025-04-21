@@ -8,7 +8,8 @@ export function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    // const API_URL = "https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "http://localhost:5000"; // Địa chỉ API của bạn
     const handleRegister = async (e) => {
         e.preventDefault();
         setError(""); // Reset lỗi trước khi gửi yêu cầu
