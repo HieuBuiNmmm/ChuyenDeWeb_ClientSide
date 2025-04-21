@@ -60,7 +60,7 @@ export function Navbar() {
             <div className="flex items-center gap-8">
                 {/* Logo */}
                 <Link to="/">
-                    <img src="../../public/LogoFood.png" alt="FoodEaz" className="h-10" />
+                    <img src="/LogoFood.png" alt="FoodEaz" className="h-10" />
                 </Link>
 
                 {/* Categories */}
