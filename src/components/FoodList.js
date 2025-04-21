@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Edit2, Trash2 } from "lucide-react";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 export function FoodList() {
+    const { user } = useAuth();
     const ITEMS_PER_PAGE = 12;
     const [visibleFoods, setVisibleFoods] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -216,22 +218,25 @@ export function FoodList() {
                                     {food.Giá.toLocaleString("vi-VN")}₫
                                 </p>
                             </div>
-                            <div className="absolute bottom-2 right-2 flex gap-2">
-                                <button
-                                    onClick={() => navigate(`/update-food/${food.ID}`)}
-                                    className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
-                                    title="Cập Nhật"
-                                >
-                                    <Edit2 size={16} />
-                                </button>
-                                <button
-                                    onClick={() => handleConfirmDelete(food.ID)}
-                                    className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
-                                    title="Xóa"
-                                >
-                                    <Trash2 size={16} />
-                                </button>
-                            </div>
+                            {/* Chỉ hiển thị các nút Cập Nhật và Xóa nếu user đã đăng nhập */}
+                            {user && (
+                                <div className="absolute bottom-2 right-2 flex gap-2">
+                                    <button
+                                        onClick={() => navigate(`/update-food/${food.ID}`)}
+                                        className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                                        title="Cập Nhật"
+                                    >
+                                        <Edit2 size={16} />
+                                    </button>
+                                    <button
+                                        onClick={() => handleConfirmDelete(food.ID)}
+                                        className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
+                                        title="Xóa"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

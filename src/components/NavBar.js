@@ -1,13 +1,16 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Search, User } from "lucide-react";
+import { ChevronDown, User } from "lucide-react";
 import { useAuth } from "./AuthContext"; // Import AuthContext
 
 const categories = [
     { name: "Danh Sách Món Ăn", path: "/foods" },
+];
+
+const adminCategories = [
     { name: "Thêm Món Ăn", path: "/add-food" },
     { name: "Cập Nhật Món Ăn", path: "/update-food" },
-    { name: "Xóa Món Ăn", path: "/delete-food" }
+    { name: "Xóa Món Ăn", path: "/delete-food" },
 ];
 
 export function Navbar() {
@@ -79,6 +82,22 @@ export function Navbar() {
                             {item.name}
                         </NavLink>
                     ))}
+                    {/* Hiển thị adminCategories nếu user đã đăng nhập */}
+                    {user &&
+                        adminCategories.map((item, index) => (
+                            <NavLink
+                                key={index}
+                                to={item.path}
+                                className={({ isActive }) =>
+                                    `text-sm font-medium px-3 py-2 rounded-lg transition-all ${isActive
+                                        ? "text-orange-600 bg-orange-100 border border-orange-500"
+                                        : "text-gray-700 hover:text-orange-500 hover:bg-gray-100"
+                                    }`
+                                }
+                            >
+                                {item.name}
+                            </NavLink>
+                        ))}
                 </div>
             </div>
 
