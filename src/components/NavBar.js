@@ -134,6 +134,12 @@ export function Navbar() {
                                     Xem Hồ Sơ
                                 </Link>
                                 <button
+                                    onClick={() => alert(`User ID: ${user.id}`)} // Nút hiển thị user_id
+                                    className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100"
+                                >
+                                    Hiển thị ID
+                                </button>
+                                <button
                                     onClick={handleLogout}
                                     className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
                                 >

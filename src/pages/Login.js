@@ -9,10 +9,11 @@ export function Login() {
     const navigate = useNavigate();
     const { login } = useAuth();
     const API_URL = "https://chuyendeweb-serverside.onrender.com";
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(""); // Reset lỗi trước khi gửi yêu cầu
-    
+
         try {
             const response = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
@@ -21,27 +22,27 @@ export function Login() {
                 },
                 body: JSON.stringify({ email, password }),
             });
-    
+
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Error response from server:", errorData); // Log lỗi từ server
                 throw new Error(errorData.error || "Đăng nhập thất bại");
             }
-    
+
             const data = await response.json();
-            const { token } = data;
-    
-            // Lưu token vào localStorage hoặc context
-            localStorage.setItem("authToken", token);
-            login(email); // Cập nhật trạng thái đăng nhập trong AuthContext
-    
+            const { accessToken, user } = data; // API trả về thông tin người dùng và token
+
+            // Lưu token và thông tin người dùng vào localStorage
+            localStorage.setItem("authToken", accessToken);
+            login(user); // Lưu thông tin người dùng vào AuthContext
+
             navigate("/"); // Điều hướng về trang chủ
         } catch (err) {
             console.error("Error during login:", err.message); // Log lỗi chi tiết
             setError(err.message); // Hiển thị lỗi nếu có
         }
     };
-    
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">

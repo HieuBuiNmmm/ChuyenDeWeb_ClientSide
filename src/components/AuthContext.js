@@ -13,15 +13,15 @@ export function AuthProvider({ children }) {
         }
     }, []);
 
-    const login = (email) => {
-        const newUser = { email };
-        setUser(newUser);
-        localStorage.setItem("user", JSON.stringify(newUser));
+    const login = (userData) => {
+        setUser(userData); // Lưu toàn bộ thông tin người dùng
+        localStorage.setItem("user", JSON.stringify(userData)); // Lưu vào localStorage
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem("user");
+        localStorage.removeItem("authToken"); // Xóa token nếu cần
     };
 
     return (

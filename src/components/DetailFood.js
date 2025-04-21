@@ -5,14 +5,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import { useAuth } from "./AuthContext"; // Import AuthContext
 
 export function DetailFood() {
+    const { user } = useAuth();
     const { id } = useParams(); // Lấy ID từ URL
     const [food, setFood] = useState(null); // State để lưu thông tin món ăn
     const [quantity, setQuantity] = useState(1);
     const [similarFoods, setSimilarFoods] = useState([]); // State để lưu sản phẩm tương tự
     const [loading, setLoading] = useState(true); // State để hiển thị trạng thái tải dữ liệu
-    const API_URL ="https://chuyendeweb-serverside.onrender.com";
+    const API_URL = "https://chuyendeweb-serverside.onrender.com";
 
     useEffect(() => {
         const fetchFoodDetails = async () => {
@@ -53,6 +55,34 @@ export function DetailFood() {
         );
     }
 
+    const handleAddToCart = async () => {
+        if (!user) {
+            alert("Vui lòng đăng nhập để thêm vào giỏ hàng!");
+            return;
+        }
+
+        const order = {
+            order_id: `ORDER${Date.now()}`, // Tạo mã order dựa trên timestamp
+            user_id: user.id, // Lấy user_id từ AuthContext
+            food_id: id,
+            quantity: quantity,
+            total_price: food.Giá * quantity,
+            order_time: new Date().toISOString(),
+            status: "Đang xử lý",
+        };
+
+        // alert(`Thông tin đơn hàng:\n${JSON.stringify(order, null, 2)}`);
+
+        try {
+            const response = await axios.post(`${API_URL}/api/orders`, order);
+            console.log("Order đã được tạo:", response.data);
+            alert("Đã thêm vào giỏ hàng thành công!");
+        } catch (error) {
+            console.error("Lỗi khi tạo order:", error);
+            alert("Đã xảy ra lỗi khi thêm vào giỏ hàng!");
+        }
+    };
+
     return (
         <div className="container mx-auto px-6 py-8">
             <div className="flex flex-col md:flex-row gap-8">
@@ -88,13 +118,13 @@ export function DetailFood() {
     
                     <button
                         className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"
-                        onClick={() => console.log(`Thêm ${quantity} sản phẩm vào giỏ hàng`)}
+                        onClick={handleAddToCart}
                     >
                         Thêm vào giỏ hàng
                     </button>
                 </div>
             </div>
-    
+
             {/* Sản phẩm tương tự */}
             {similarFoods.length > 0 && (
                 <div className="mt-12">
