@@ -110,40 +110,28 @@
 // }
 
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../components/AuthContext"; // Import AuthContext để lấy thông tin user
 import axios from "axios";
 
 export function ProfileUser() {
-    const { user } = useAuth(); // Lấy thông tin user từ AuthContext
-    const [userData, setUserData] = useState(null); // Dữ liệu người dùng từ backend
+    const [user, setUser] = useState(null); // Dữ liệu user
     const [isEditing, setIsEditing] = useState(false); // Trạng thái chỉnh sửa
-    const [formData, setFormData] = useState(null); // Dữ liệu form
-    const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
-    const [error, setError] = useState(""); // Lỗi nếu có
+    const [formData, setFormData] = useState({}); // Dữ liệu form
     const API_URL = "https://chuyendeweb-serverside.onrender.com";
 
-    // Lấy thông tin người dùng từ backend
+    // Lấy thông tin user từ API khi component được render
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUser = async () => {
             try {
-                const authToken = localStorage.getItem("authToken");
-                const response = await axios.get(`${API_URL}/api/users/${user.id}`, {
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
-                setUserData(response.data);
-                setFormData(response.data); // Đồng bộ dữ liệu form
-                setLoading(false);
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-                setError("Không thể tải thông tin người dùng.");
-                setLoading(false);
+                const response = await axios.get(`${API_URL}/api/user/profile`); // Thay URL bằng endpoint thực tế
+                setUser(response.data);
+                setFormData(response.data); // Gán dữ liệu user vào form
+            } catch (error) {
+                console.error("Lỗi khi lấy thông tin user:", error);
             }
         };
 
-        fetchUserData();
-    }, [user]);
+        fetchUser();
+    }, []);
 
     // Xử lý thay đổi input
     const handleInputChange = (e) => {
@@ -151,54 +139,36 @@ export function ProfileUser() {
         setFormData({ ...formData, [name]: value });
     };
 
-    // Lưu thông tin người dùng sau khi chỉnh sửa
+    // Lưu thông tin user
     const handleSave = async () => {
         try {
-            const authToken = localStorage.getItem("authToken");
-            await axios.put(`${API_URL}/api/users/${user.id}`, formData, {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            });
-            setUserData(formData); // Cập nhật dữ liệu hiển thị
+            const response = await axios.put("/api/user/profile", formData); // Thay URL bằng endpoint thực tế
+            setUser(response.data); // Cập nhật thông tin user
             setIsEditing(false); // Thoát chế độ chỉnh sửa
-            alert("Cập nhật thông tin thành công!");
-        } catch (err) {
-            console.error("Error updating user data:", err);
-            alert("Không thể cập nhật thông tin.");
+        } catch (error) {
+            console.error("Lỗi khi cập nhật thông tin user:", error);
         }
     };
 
-    if (loading) {
-        return <div className="text-center mt-8">Đang tải thông tin người dùng...</div>;
-    }
-
-    if (error) {
-        return <div className="text-center mt-8 text-red-500">{error}</div>;
+    if (!user) {
+        return <div>Đang tải thông tin...</div>; // Hiển thị khi dữ liệu chưa tải xong
     }
 
     return (
         <div className="container mx-auto px-6 py-8 min-h-[736px]">
-            {/* Banner */}
-            <div className="Banner mb-6">
-                <img
-                    src="/images/user-banner/Banner-User-Default.jpg"
-                    alt="User Banner"
-                    className="w-full h-64 object-cover rounded-lg shadow-md"
-                />
-            </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Thông Tin Cá Nhân</h2>
             <div className="bg-white rounded-lg shadow-md p-6">
                 {isEditing ? (
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Họ và Tên</label>
+                            <label className="block text-sm font-medium text-gray-700">ID</label>
                             <input
                                 type="text"
-                                name="name"
-                                value={formData.name}
+                                name="id"
+                                value={formData.id || ""}
                                 onChange={handleInputChange}
                                 className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                disabled // Không cho phép chỉnh sửa ID
                             />
                         </div>
                         <div>
@@ -206,29 +176,29 @@ export function ProfileUser() {
                             <input
                                 type="email"
                                 name="email"
-                                value={formData.email}
+                                value={formData.email || ""}
                                 onChange={handleInputChange}
                                 className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Số Điện Thoại</label>
+                            <label className="block text-sm font-medium text-gray-700">Role</label>
                             <input
                                 type="text"
-                                name="phone"
-                                value={formData.phone}
+                                name="role"
+                                value={formData.role || ""}
                                 onChange={handleInputChange}
                                 className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Địa Chỉ</label>
+                            <label className="block text-sm font-medium text-gray-700">Ngày Tạo</label>
                             <input
                                 type="text"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleInputChange}
+                                name="created_at"
+                                value={new Date(parseInt(formData.created_at?.$date?.$numberLong || 0)).toLocaleString()}
                                 className="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                disabled // Không cho phép chỉnh sửa ngày tạo
                             />
                         </div>
                         <button
@@ -241,13 +211,17 @@ export function ProfileUser() {
                 ) : (
                     <div className="space-y-4">
                         <p>
-                            <span className="font-medium text-gray-700">Email:</span> {userData.email}
+                            <span className="font-medium text-gray-700">ID:</span> {user.id}
                         </p>
                         <p>
-                            <span className="font-medium text-gray-700">Số Điện Thoại:</span> {userData.phone}
+                            <span className="font-medium text-gray-700">Email:</span> {user.email}
                         </p>
                         <p>
-                            <span className="font-medium text-gray-700">Địa Chỉ:</span> {userData.address}
+                            <span className="font-medium text-gray-700">Role:</span> {user.role}
+                        </p>
+                        <p>
+                            <span className="font-medium text-gray-700">Ngày Tạo:</span>{" "}
+                            {new Date(parseInt(user.created_at?.$date?.$numberLong || 0)).toLocaleString()}
                         </p>
                         <button
                             onClick={() => setIsEditing(true)}
