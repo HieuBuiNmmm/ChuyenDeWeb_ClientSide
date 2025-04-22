@@ -123,7 +123,7 @@ export function DetailFood() {
                                 className="mt-6 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition"
                                 onClick={handleAddToCart}
                             >
-                                Thêm vào giỏ hàng
+                                Đặt hàng
                             </button>
                         </>
                     ) : (
